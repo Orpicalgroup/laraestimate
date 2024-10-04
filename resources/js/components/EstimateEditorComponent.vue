@@ -13,7 +13,7 @@
 </style>
 <template>
     <div>
-        <div class="row" v-if="estimateData">
+        <div class="row" v-if="estimateData && editable">
             <div class="form-group col-md-9">
                 <label>{{ trans.get('app.labels.name') }}</label>
                 <input type="text" class="form-control" v-model="estimateData.name" @input="updateDebounced()">
@@ -49,6 +49,10 @@
                     <h3>{{ trans.get('app.labels.total') }} {{ formattedTotal }}</h3>
                 </div>
             </div>
+        </div>
+
+        <div v-if="!editable && estimateData">
+            <h1>{{ estimateData.name }}</h1>
         </div>
 
         <hr>
