@@ -21,7 +21,7 @@
                     </h4>
 
                     <div class="mt-4">
-                        <estimate-editor-component estimate="{{ $estimate->id }}" editable="{{ Auth::user()->email === 'admin@admin.com' ? 'true' : 'false' }}"></estimate-editor-component>
+                        <estimate-editor-component estimate="{{ $estimate->id }}" :editable="@json(Auth::user()->email === 'admin@admin.com')"></estimate-editor-component>
                     </div>
 
                 </div>

@@ -84,7 +84,16 @@
 import draggable from 'vuedraggable';
 
 export default {
-    props: ['estimate', 'editable'],
+    props: {
+        estimate: {
+            type: [String, Number],
+            required: true
+        },
+        editable: {
+            type: Boolean,
+            default: false
+        }
+    },
 
     components: {
         draggable,
