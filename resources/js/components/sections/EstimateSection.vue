@@ -8,8 +8,10 @@
     <div class="section p-2 mb-5" v-if="sectionData">
 
         <div>
-            <small v-if="sectionData.type == 'text'" class="text-primary mb-4">{{ trans.get('app.text_section') }}</small>
-            <small v-else class="text-primary mb-4">{{ trans.get('app.prices_section') }}</small>
+            <span v-if="(!editable && sectionData.type == 'prices') || editable">
+                <small v-if="sectionData.type == 'text'" class="text-primary mb-4">{{ trans.get('app.text_section') }}</small>
+                <small v-else class="text-primary mb-4">{{ trans.get('app.prices_section') }}</small>
+            </span>
 
             <span v-if="(!editable && sectionData.type == 'prices') || editable">
                 <small v-if="saving"><i>{{ trans.get('app.saving') }}</i></small>
