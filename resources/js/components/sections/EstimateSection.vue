@@ -14,17 +14,18 @@
             <small v-if="saving"><i>{{ trans.get('app.saving') }}</i></small>
             <small v-else><i>{{ trans.get('app.all_changes_are_saved') }}</i></small>
 
-            <div class="float-right">
+            <div v-if="editable" class="float-right">
                 <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!sectionData.id" :title="trans.get('app.labels.move')"><i class="icon ion-md-move"></i></button>
                 <button class="btn btn-sm btn-outline-danger mt-2" @click="remove()" :title="trans.get('app.labels.remove')"><i class="icon ion-md-trash"></i></button>
             </div>
         </div>
 
         <div class="mt-4">
-            <VueTrix v-model="sectionData.text" @input="saveSectionWithDebounce()" placeholder="Add your section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price." />
+            <VueTrix v-if="editable" v-model="sectionData.text" @input="saveSectionWithDebounce()" placeholder="Add your section content here. You can use *TOTAL_PRICE* to show the estimate total price in any place, and *TOTAL_SELECTED_PRICE* to show the total selected price." />
+            <div v-else v-html="sectionData.text"></div>
 
             <div class="mt-4" v-if="sectionData.type == 'prices'">
-                
+
                  <draggable v-model="sectionData.items" draggable=".item" handle=".handle" @end="saveSection()">
                     <div class="row mt-2 item" v-for="(item, index) in sectionData.items" :key="item.id">
                         <div class="col-md-2">
@@ -75,7 +76,7 @@ export default {
         draggable
     },
 
-    props: ['estimate', 'section', 'currencySettings'],
+    props: ['estimate', 'section', 'currencySettings', 'editable'],
 
     data() {
         return {
@@ -95,7 +96,7 @@ export default {
     computed: {
         total() {
             let total = this.sectionData.items.reduce((sum, item) => {
-                return sum + (parseFloat(item.price) || 0); 
+                return sum + (parseFloat(item.price) || 0);
             }, 0);
 
             total = parseFloat(total);
@@ -138,9 +139,9 @@ export default {
                 this.madeFirstInput = true;
                 return;
             }
-           
+
             this.$emit('sectionUpdated', this.sectionData);
-            
+
             this.showSavingLabel();
 
             if(!this.sectionData.id) {

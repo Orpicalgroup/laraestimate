@@ -50,7 +50,7 @@
                 </div>
             </div>
         </div>
-        
+
         <hr>
 
         <div class="row mt-4">
@@ -62,16 +62,17 @@
             <div class="col-sm-12 mt-4">
                 <draggable v-model="sections" draggable=".item" handle=".handle" @end="orderChanged()">
                     <div class="item" v-for="(section, index) in sections" :key="section.id">
-                        <estimate-section 
-                        :section="section" 
+                        <estimate-section
+                        :section="section"
                         :estimate="estimate"
+                        :editable="editable"
                         :currencySettings="estimateData.currency_settings"
                         @sectionUpdated="updateSection($event, index)" @sectionRemoved="removeSection(index, 'text')"></estimate-section>
                     </div>
                 </draggable>
             </div>
 
-            <div class="col-sm-12">
+            <div v-if="editable" class="col-sm-12">
                 <button class="btn btn-primary" @click="addSection()"><i class="icon ion-md-document"></i> {{ trans.get('app.add_text_section') }}</button>
                 <button class="btn btn-success" @click="addSection('prices')"><i class="icon ion-md-cash"></i> {{ trans.get('app.add_prices_section') }}</button>
             </div>
@@ -83,12 +84,12 @@
 import draggable from 'vuedraggable';
 
 export default {
-    props: ['estimate'],
-    
+    props: ['estimate', 'editable'],
+
     components: {
         draggable,
     },
-    
+
     data() {
         return {
             saving: false,
@@ -104,7 +105,7 @@ export default {
     computed: {
         total() {
             let total = this.sections.reduce((sum, section) => {
-                return sum + parseFloat(section.total || 0); 
+                return sum + parseFloat(section.total || 0);
             }, 0);
 
             return parseFloat(total);
@@ -163,9 +164,9 @@ export default {
 
         updateSection(sectionData, index) {
             this.$set(this.sections, index, sectionData);
-            
+
             let total = this.sections.reduce((sum, section) => {
-                return sum + parseFloat(section.total || 0); 
+                return sum + parseFloat(section.total || 0);
             }, 0)
         },
 
@@ -209,11 +210,11 @@ export default {
             if(!this.estimateData) return '-';
 
             let currencySettings = this.estimateData.currency_settings;
-            
+
             return currencySettings.symbol + ' ' + formatMoney(
-                money, 
-                2, 
-                currencySettings.decimal_separator, 
+                money,
+                2,
+                currencySettings.decimal_separator,
                 currencySettings.thousands_separator
             ).toString();
         }
