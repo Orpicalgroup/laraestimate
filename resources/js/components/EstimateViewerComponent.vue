@@ -66,7 +66,7 @@
 
             <div class="row">
 
-                <div id="estimateDocument" class="col-md-8 offset-md-2 bg-white p-md-5 animated bounceIn fast" v-if="estimateData">
+                <div id="estimateDocument" class="col-md-10 offset-md-1 bg-white p-md-5 animated bounceIn fast" v-if="estimateData">
 
                     <section class="m-4 text-center" v-if="estimateData.logo_image">
                         <img :src="estimateData.logo_image" alt="Estimate Image" width="150px">
@@ -78,7 +78,7 @@
 
                     <section class="mb-5" v-for="section in estimateData.sections" :key="section.id">
                         <p v-html="section.presentable_text"></p>
-                        
+
                         <div class="table-responsive">
                             <table class="table mt-4 p-sm-2 p-md-0" v-if="section.items.length">
                                 <tr>
@@ -136,7 +136,7 @@ export default {
             if(!this.estimateData.sections) return 0;
 
             let total = this.estimateData.sections.reduce((sum, section) => {
-                return sum + this.sectionTotal(section, false); 
+                return sum + this.sectionTotal(section, false);
             }, 0);
 
             return total;
@@ -144,9 +144,9 @@ export default {
 
         estimateTotalSelectedPrice() {
             if(!this.estimateData.sections) return 0;
-            
+
             let total = this.estimateData.sections.reduce((sum, section) => {
-                return sum + this.sectionTotal(section, true); 
+                return sum + this.sectionTotal(section, true);
             }, 0);
 
             return total;
@@ -159,7 +159,7 @@ export default {
         init() {
             axios.get('/estimates/' + this.estimate + '/data').then(({data}) => {
                 this.estimateData = this.treatData(data);
-                
+
                 this.$nextTick(() => {
                     this.renderPrices();
                 })
@@ -168,12 +168,12 @@ export default {
 
         treatData(data) {
             data.sections = data.sections.map(section => {
-                
-                section.items = section.items.map(item => { 
+
+                section.items = section.items.map(item => {
                     item.selected = true ;
                     return item;
                 });
-                
+
                 return section;
             });
 
@@ -188,7 +188,7 @@ export default {
                     itemPrice = !item.selected ? 0 : itemPrice;
                 }
 
-                return sum + itemPrice; 
+                return sum + itemPrice;
             }, 0);
 
             return parseFloat(total);
@@ -198,7 +198,7 @@ export default {
             let currencySettings = this.estimateData.currency_settings;
 
             return currencySettings.symbol + ' ' + formatMoney(
-                price, 2, 
+                price, 2,
                 currencySettings.decimal_separator,
                 currencySettings.thousands_separator,
             ).toString();
@@ -258,7 +258,7 @@ export default {
             let container = document.getElementById('printContainer'),
                 estimate = document.getElementById('estimateDocument'),
                 mainElement = document.getElementById('estimateMainSection');
-            
+
             container.classList.remove('container');
             container.classList.add('container-fluid');
             estimate.classList.add('col');
@@ -272,7 +272,7 @@ export default {
             let container = document.getElementById('printContainer'),
                 estimate = document.getElementById('estimateDocument'),
                 mainElement = document.getElementById('estimateMainSection');
-            
+
             container.classList.add('container');
             container.classList.remove('container-fluid');
             estimate.classList.remove('col');
