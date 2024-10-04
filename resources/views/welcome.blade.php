@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'Attics and More Customer Quotes Portal') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat:700,600,500,400" rel="stylesheet">
@@ -104,7 +104,7 @@
                 </div>
 
                 <div class="m-b-md">
-                    <strong>Customer Quotes Portal</strong>
+                    <h2>Customer Quotes Portal</h2>
                 </div>
 
                 <div class="footer">
