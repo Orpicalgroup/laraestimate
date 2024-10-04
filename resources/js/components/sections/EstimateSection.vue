@@ -11,8 +11,10 @@
             <small v-if="sectionData.type == 'text'" class="text-primary mb-4">{{ trans.get('app.text_section') }}</small>
             <small v-else class="text-primary mb-4">{{ trans.get('app.prices_section') }}</small>
 
-            <small v-if="saving"><i>{{ trans.get('app.saving') }}</i></small>
-            <small v-else><i>{{ trans.get('app.all_changes_are_saved') }}</i></small>
+            <span v-if="editable">
+                <small v-if="saving"><i>{{ trans.get('app.saving') }}</i></small>
+                <small v-else><i>{{ trans.get('app.all_changes_are_saved') }}</i></small>
+            </span>
 
             <div v-if="editable" class="float-right">
                 <button class="btn btn-sm btn-outline-secondary mt-2 handle" :disabled="!sectionData.id" :title="trans.get('app.labels.move')"><i class="icon ion-md-move"></i></button>
